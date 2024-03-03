@@ -1,0 +1,519 @@
+<!-- Establishing connection to connection.php   -->
+<?php
+include_once('private/connection.php');
+//Starting Session
+session_start();
+
+?>
+
+<!-- Setting Doc type as HTML -->
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title for webpage as local theatre -->
+
+<head>
+    <meta charset="utf-8">
+    <title>localTheatre</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="localTheatre" name="keywords">
+    <meta content="localTheatre" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Flaticon Font -->
+    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- Setting up Font Style  -->
+    <style>
+        .userTitle {
+            font-size: 18px;
+            color: #333333;
+        }
+
+        .welcome-user {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body class="bg-white">
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left">
+                <div class="d-inline-flex align-items-center">
+                    <p class="mr-2 mb-2 mb-lg-0 text-white">Opening Hours:</p>
+                    <span class="mb-2 mb-lg-0 text-white">8.00AM - 9.00PM</span>
+                </div>
+            </div>
+            <!-- Follow us links  -->
+            <!-- Div classes to inherit from style.css -->
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <p class="m-0 mr-1 text-white">Follow Us:</p>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Creating "LocalTheatre" logo for the top of the website -->
+        <div class="row py-3 px-lg-5">
+            <div class="col-lg-4">
+                <a href="" class="navbar-brand d-none d-lg-block">
+                    <h1 class="m-0 display-5 text-capitalize font-italic"><span class="text-primary">local</span>Theatre</h1>
+                </a>
+                <!-- A href to redirect back to index.php homepage -->
+                <!-- Flex box style CSS for contact information -->
+            </div>
+            <div class="col-lg-8 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <div class="d-inline-flex flex-column text-center pr-3 border-right">
+                        <h6>Our Office</h6>
+                        <p class="m-0">23 South Street, Elgin</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center px-3 border-right">
+                        <h6>Email Us</h6>
+                        <p class="m-0">info@localtheatre.com</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center pl-3">
+                        <h6>Call Us</h6>
+                        <p class="m-0">01343 657583</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+
+    <!-- Navbar Start -->
+    <!-- Containter added for navigation menu -->
+    <div class="container-fluid p-0 mb-5">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-0">
+            <a href="" class="navbar-brand d-block d-lg-none">
+                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span class="text-primary">local</span>Theatre</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav m-auto py-4">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="whatson.html" class="nav-item nav-link">Whats On</a>
+                    <a href="reviews.html" class="nav-item nav-link active">Reviews</a>
+                    <a href="blog.html" class="nav-item nav-link">Blog</a>
+                    <a href="Membership.html" class="nav-item nav-link">Membership</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div style="display: flex;">
+                    <!--PHP session for when user is logged in to display "login" or "logout" depending on the session variable-->
+                    <!-- CSS style for active buttons inherited from style.css -->
+
+                    <?php if (isset($_SESSION['username'])) {
+                        echo "
+                    <form action ='private/logout.php' method='post'>
+                        <button class='btn btn-lg btn-primary mt-3 mt-md-4 px-4' name='logout'>Logout</button>
+                    </form>";
+                    } else {
+                        echo "<a style='margin: 0px 3px 5px 5px;' href='php/register.php' class='nav navbar-nav navbar-right'>Sign Up</a>
+                        <a style='margin: 0px 3px 5px 5px;' href='php/login.php' class='nav navbar-nav navbar-right'>Log in</a>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+    <!-- Detail Start -->
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="d-flex flex-column text-left mb-4">
+                    <!-- Setting title to "Reviews" -->
+                    <h5 class="text-primary mb-3">Reviews</h5>
+                    <!-- Sub-heading -->
+                    <h1 class="mb-3">Lorem ipsum dolor sit amet</h1>
+                    <div class="d-index-flex mb-2">
+                        <!-- Links to other pages  -->
+                        <span class="mr-3"><i class="fa fa-user text-primary"></i> Manager</span>
+                        <span class="mr-3"><i class="fa fa-folder text-primary"></i> Fantasy</span>
+                        <span class="mr-3"><i class="fa fa-comments text-primary"></i> 15</span>
+                    </div>
+                </div>
+                <!-- Div for review of show  -->
+                <div class="mb-5">
+                    <!-- Div Detail 2 setting position of image and text surrounding inheriting postion of style.css -->
+                    <img class="img-thumbnail mb-4 p-3" src="img/ballet-1920.webp" alt="Image">
+                    <div id="content">
+                        <p>Sadipscing labore amet rebum est et justo gubergren. Et eirmod ipsum sit diam ut magna lorem.
+                            Nonumy vero labore lorem sanctus rebum et lorem magna kasd, stet amet magna accusam consetetur eirmod.
+                            Kasd accusam sit ipsum sadipscing et at at sanctus et. Ipsum sit gubergren dolores et, consetetur justo
+                            invidunt at et aliquyam ut et vero clita. Diam sea sea no sed dolores diam nonumy, gubergren sit stet no diam
+                            kasd vero, eos tempor gubergren clita est consetetur dolores et dolor. Sadipscing lorem kasd labore ea
+                            sanctus sanctus, dolores invidunt et consetetur et duo. Tempor dolores accusam sit vero sit, sed labore
+                            duo vero et at, et amet et justo gubergren. Labore aliquyam voluptua dolor nonumy lorem. Sanctus sed
+                            sadipscing rebum ipsum dolor et ea no. Ipsum elitr sea erat.</p>
+                    </div>
+                    <script src="..\private\scripts.js"></script>
+                    <p>Voluptua est takimata stet invidunt sed rebum nonumy stet, clita aliquyam dolores vero stet consetetur elitr takimata rebum sanctus. Sit sed accusam stet sit nonumy kasd diam dolores, sanctus lorem kasd duo dolor dolor vero sit et. Labore ipsum duo sanctus amet eos et. Consetetur no sed et aliquyam ipsum justo et, clita lorem sit vero amet amet est dolor elitr, stet et no diam sit. Dolor erat justo dolore sit invidunt, sed duo dolor et amet no et. Ut takimata tempor kasd amet kasd ut. No et ipsum amet tempor et. Sed nonumy sed vero ut, sed aliquyam accusam clita dolores tempor est. Ea et takimata consetetur et amet sanctus. Duo no diam ipsum diam dolores, eirmod diam dolores clita sed erat magna. Dolore ut amet ea magna. Sea et dolore sit labore at amet eos. Dolor voluptua sit rebum sit ut nonumy. Dolor amet amet sit sadipscing, lorem.</p>
+                    <h2 class="mb-4">Est dolor lorem et ea</h2>
+                    <!-- Div Detail 3 setting position of image and text surrounding inheriting postion of style.css -->
+                    <img class="img-thumbnail p-3 w-50 float-left mr-4 mb-3" src="img/LM-1200-030322.jpg" alt="Image">
+                    <p>Diam dolor est labore duo invidunt ipsum clita et, sed et lorem voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos. Clita no magna no dolor erat diam tempor rebum consetetur, sanctus labore sed nonumy diam lorem amet eirmod. No at tempor sea diam kasd, takimata ea nonumy elitr sadipscing gubergren erat. Gubergren at lorem invidunt sadipscing rebum sit amet ut ut, voluptua diam dolores at sadipscing stet. Clita dolor amet dolor ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et. Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam takimata sea kasd dolores diam, amet et est accusam labore eirmod vero et voluptua. Amet labore clita duo et no. Rebum voluptua magna eos magna, justo gubergren labore sit voluptua eos. Dolores et no stet magna et gubergren amet dolor sit, lorem dolore est vero et. Justo erat magna ipsum magna sea. Magna amet est sit sed sadipscing. At takimata dolores ut dolore takimata stet nonumy ipsum, gubergren vero ea consetetur aliquyam kasd est magna justo, dolore justo at dolore et aliquyam nonumy lorem gubergren. Amet duo invidunt kasd labore aliquyam. Vero dolores lorem elitr justo ut, accusam erat sed dolor at accusam takimata ipsum sea diam. Ipsum voluptua lorem sed amet, amet sea sit et at nonumy labore takimata, justo ipsum voluptua stet takimata. Ea lorem elitr aliquyam gubergren sit magna sanctus, sed sed dolore ipsum justo dolor et amet invidunt erat. Sadipscing sanctus stet.</p>
+                    <h3 class="mb-4">Est dolor lorem et ea</h3>
+                    <!-- Div Detail 4 setting position of image and text surrounding inheriting postion of style.css -->
+                    <img class="img-thumbnail p-3 w-50 float-right ml-4 mb-3" src="img/stage.jfif" alt="Image">
+                    <p>Diam dolor est labore duo invidunt ipsum clita et, sed et lorem voluptua tempor invidunt at est sanctus sanctus. Clita dolores sit kasd diam takimata justo diam lorem sed. Magna amet sed rebum eos. Clita no magna no dolor erat diam tempor rebum consetetur, sanctus labore sed nonumy diam lorem amet eirmod. No at tempor sea diam kasd, takimata ea nonumy elitr sadipscing gubergren erat. Gubergren at lorem invidunt sadipscing rebum sit amet ut ut, voluptua diam dolores at sadipscing stet. Clita dolor amet dolor ipsum vero ea ea eos. Invidunt sed diam dolores takimata dolor dolore dolore sit. Sit ipsum erat amet lorem et, magna sea at sed et eos. Accusam eirmod kasd lorem clita sanctus ut consetetur et. Et duo tempor sea kasd clita ipsum et. Takimata kasd diam justo est eos erat aliquyam et ut. Ea sed sadipscing no justo et eos labore, gubergren ipsum magna dolor lorem dolore, elitr aliquyam takimata sea kasd dolores diam, amet et est accusam labore eirmod vero et voluptua. Amet labore clita duo et no. Rebum voluptua magna eos magna, justo gubergren labore sit voluptua eos. Dolores et no stet magna et gubergren amet dolor sit, lorem dolore est vero et. Justo erat magna ipsum magna sea. Magna amet est sit sed sadipscing. At takimata dolores ut dolore takimata stet nonumy ipsum, gubergren vero ea consetetur aliquyam kasd est magna justo, dolore justo at dolore et aliquyam nonumy lorem gubergren. Amet duo invidunt kasd labore aliquyam. Vero dolores lorem elitr justo ut, accusam erat sed dolor at accusam takimata ipsum sea diam. Ipsum voluptua lorem sed amet, amet sea sit et at nonumy labore takimata, justo ipsum voluptua stet takimata. Ea lorem elitr aliquyam gubergren sit magna sanctus, sed sed dolore ipsum justo dolor et amet invidunt erat. Sadipscing sanctus stet.</p>
+                </div>
+                <!-- Managment Comment  -->
+                <div class="media bg-primary text-white mb-5 p-4 p-md-5">
+                    <!-- Picture of user John Doe -->
+                    <img src="img/user.jpg" alt="Image" class="img-thumbnail p-3 mr-4 mt-1 bg-primary" style="width:100px;">
+                    <div class="media-body">
+                        <!-- Username section -->
+                        <h5 class="mb-3">John Doe</h5>
+                        <p class="m-0">Conset elitr erat vero sanctus labore dolor ipsum et diam, tempor dolores eos dolor conset lorem ipsum, ipsum accusam ipsum sit no ut est. Guber ea ipsum erat conset magna kasd amet est magna elitr ea sit justo sed sanctus.</p>
+                    </div>
+                    <button class="btn btn-sm btn-dark">Add a Comment</button>
+                </div>
+                <!-- Div comment Section  -->
+                <div class="mb-5">
+                    <h4 class="mb-4">3 Comments</h4>
+                    <div class="media mb-4">
+                        <img src="img/user.jpg" alt="Image" class="img-thumbnail p-2 mr-3 mt-1" style="width:60px;">
+                        <div class="media-body">
+                            <!-- Username section -->
+                            <h6>John Doe <small><i>01 Jan 2022 at 12:00pm</i></small></h6>
+                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum. Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor consetetur at sit.</p>
+                            <!-- Reply to user comment button -->
+                            <button class="btn btn-sm btn-dark">Reply</button>
+                        </div>
+                    </div>
+                    <!-- Div comment Section -->
+                    <!--  Staggered divs to show user reply to OP  -->
+                    <div class="media mb-4">
+                        <img src="img/user.jpg" alt="Image" class="img-thumbnail p-2 mr-3 mt-1" style="width:60px;">
+                        <div class="media-body">
+                            <!-- Username and date added section -->
+                            <h6>John Doe <small><i>01 Jan 2022 at 12:00pm</i></small></h6>
+                            <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum. Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor consetetur at sit.</p>
+                            <button class="btn btn-sm btn-dark">Reply</button>
+                            <!-- Reply to user comment button -->
+                            <div class="media mt-4">
+                                <img src="img/user.jpg" alt="Image" class="img-thumbnail p-2 mr-3 mt-1" style="width:60px;">
+                                <div class="media-body">
+                                    <h6>John Doe <small><i>01 Jan 2022 at 12:00pm</i></small></h6>
+                                    <p>Diam amet duo labore stet elitr invidunt ea clita ipsum voluptua, tempor labore accusam ipsum et no at. Kasd diam tempor rebum magna dolores sed sed eirmod ipsum. Gubergren clita aliquyam consetetur sadipscing, at tempor amet ipsum diam tempor consetetur at sit.</p>
+                                    <!-- Reply to user comment button -->
+                                    <button class="btn btn-sm btn-dark">Reply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+         <!-- Review setup to add new review to the reviews page -->       
+                <div style="padding: 30px; background: #f6f6f6;">
+                    <h4 class="mb-4">Write a Review</h4>
+                    <label for="categoryList">Select a category</label>
+                    <select name="categoryList" id="changeExample">
+                        <option value="Fantasy">Fantasy</option>
+                        <option value="Adventure">Adventure</option>
+                        <option value="Horror">Horror</option>
+                        <option value="Science">Science</option>
+                        <option value="Comedy">Comedy</option>
+                    </select>
+                    <div class="mb-4" id="output"></div>
+
+                    <div class="mb-4">
+                        <label for="reviewAttachment">Attach File or Picture (optional)</label>
+                        <input type="file" id="reviewAttachment" name="reviewAttachment">
+                    </div>
+<!-- Form setup to add new comment to the reviews page -->
+                    <form>
+                        <!-- Form: Message -->
+                        <div class="form-group">
+                            <label for="message">Message -</label>
+                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                        </div>
+                        <div class="mb-4">
+                            <label for="memberStatus">Are you a member?</label>
+                            <input type="checkbox" name="memberStatus" id="memberStatus" value="Yes">
+                            <label for="memberStatus">Yes</label>
+                        </div>
+                        <!-- Div class inherit style from style.css -->
+                        <div class="form-group mb-0">
+                            <!-- Submit button to leave a comment on page  -->
+                            <input type="submit" value="Post Review" class="btn btn-primary px-3">
+                        </div>
+                        <!-- End of Form -->
+                    </form>
+                </div>
+                
+            </div>
+            <!-- Start of side menu -->
+<!-- Start of Categories -->
+<!-- Input search to view the reviews page for user or comment -->
+<!-- Will be connected to a query script in final product -->
+<div class="col-lg-4 mt-5 mt-lg-0">
+    <div class="mb-5">
+        <form action="">
+            <div class="input-group">
+                <input type="text" class="form-control form-control-lg" placeholder="Keyword">
+                <div class="input-group-append">
+                    <span class="input-group-text bg-transparent text-primary"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="mb-5">
+        <h4 class="mb-4">Categories</h4>
+        <ul class="list-group">
+            <!-- Categories list -->
+            <!-- Additional categories can be added here -->
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Fantasy
+                <span class="badge badge-primary badge-pill">150</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Adventure
+                <span class="badge badge-primary badge-pill">131</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Horror
+                <span class="badge badge-primary badge-pill">78</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Science
+                <span class="badge badge-primary badge-pill">56</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                Comedy
+                <span class="badge badge-primary badge-pill">98</span>
+            </li>
+        </ul>
+       
+
+            <!-- JavaScript file for dynamic functionalities -->
+            <script src="../private/scripts.js"></script>
+        </div>
+    <!-- End of Categories -->
+
+    <!-- Start of recent posts -->
+    <div class="mb-5">
+        <h4 class="mb-4">All Reviews</h4>
+        <!-- Recent post details 1 -->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- Recent post details 2-->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- Recent post details 3 -->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- Recent post details 4-->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- Recent post details 5 -->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- Recent post details 6-->
+        <div class="d-flex align-items-center border-bottom mb-3 pb-3">
+            <img class="img-thumbnail p-2" src="img/play1200.jpg" style="width: 80px; height: 80px;" alt="">
+            <div class="d-flex flex-column pl-3">
+                <a class="font-weight-bold text-secondary mb-2" href="">Lorem ipsum dolor sit amet consec adipis elit</a>
+                <div class="d-flex">
+                    <small class="mr-3"><i class="fa fa-user text-muted"></i> Admin</small>
+                    <small class="mr-3"><i class="fa fa-folder text-muted"></i> Web Design</small>
+                    <small class="mr-3"><i class="fa fa-comments text-muted"></i> 15</small>
+                </div>
+            </div>
+        </div>
+        <!-- More recent posts can be added here -->
+        </div>
+    </div>
+</div>
+</div>
+    <!-- End of recent posts  -->
+
+
+    
+        <!-- Footer Start -->
+<footer>
+    <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h1 class="mb-3 display-5 text-capitalize font-italic text-white"><span class="text-primary">Local</span>Theatre</h1>
+                <p class="m-0">Ipsum amet sed vero et lorem stet eos ut, labore sed sed stet sea est ipsum ut. Volup amet ea sanct ipsum, dolore vero lorem no duo eirmod. Eirmod amet ipsum no ipsum lorem clita ut. Ut sed sit lorem ea lorem sed, amet stet sit sea ea diam tempor kasd kasd. Diam nonumy etsit tempor ut sed diam sed et ea</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Popular Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Get In Touch</h5>
+                        <!-- Footer menu div to split in headings for contact information -->
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        <div class="d-flex justify-content-start mt-4">
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row pt-3">
+            <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                <p class="m-0 text-white">
+                    <!-- Creating "LocalTheatre" logo for the bottom of the website -->
+                    <!-- Adding copyright legislation -->
+                    &copy; <a class="text-white font-weight-bold" href="#">localTheatre</a>. 
+                    
+                    All Rights Reserved. Designed by Joshua Oakman
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <ul class="nav d-inline-flex">
+                    <li class="nav-item">
+                        <!-- Footer flex nav menu div to split up Privacy/Terms/FAQs/Help -->
+                        <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-secondary border back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries connected to page -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>

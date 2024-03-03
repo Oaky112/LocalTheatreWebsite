@@ -1,0 +1,314 @@
+<!-- Establishing connection to connection.php   -->
+<?php
+include_once('private/connection.php');
+//Starting Session
+session_start();
+
+?>
+
+<!-- Setting Doc type as HTML -->
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Title for webpage as local theatre -->
+
+<head>
+    <meta charset="utf-8">
+    <title>localTheatre</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="localTheatre" name="keywords">
+    <meta content="localTheatre" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Flaticon Font -->
+    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+
+    <!-- Setting up Font Style  -->
+    <style>
+        .userTitle {
+            font-size: 18px;
+            color: #333333;
+        }
+
+        .welcome-user {
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body class="bg-white">
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left">
+                <div class="d-inline-flex align-items-center">
+                    <p class="mr-2 mb-2 mb-lg-0 text-white">Opening Hours:</p>
+                    <span class="mb-2 mb-lg-0 text-white">8.00AM - 9.00PM</span>
+                </div>
+            </div>
+            <!-- Follow us links  -->
+            <!-- Div classes to inherit from style.css -->
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <p class="m-0 mr-1 text-white">Follow Us:</p>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Creating "LocalTheatre" logo for the top of the website -->
+        <div class="row py-3 px-lg-5">
+            <div class="col-lg-4">
+                <a href="" class="navbar-brand d-none d-lg-block">
+                    <h1 class="m-0 display-5 text-capitalize font-italic"><span class="text-primary">local</span>Theatre</h1>
+                </a>
+                <!-- A href to redirect back to index.php homepage -->
+                <!-- Flex box style CSS for contact information -->
+            </div>
+            <div class="col-lg-8 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <div class="d-inline-flex flex-column text-center pr-3 border-right">
+                        <h6>Our Office</h6>
+                        <p class="m-0">23 South Street, Elgin</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center px-3 border-right">
+                        <h6>Email Us</h6>
+                        <p class="m-0">info@localtheatre.com</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center pl-3">
+                        <h6>Call Us</h6>
+                        <p class="m-0">01343 657583</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+
+    <!-- Navbar Start -->
+    <!-- Containter added for navigation menu -->
+    <div class="container-fluid p-0 mb-5">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-0">
+            <a href="" class="navbar-brand d-block d-lg-none">
+                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span class="text-primary">local</span>Theatre</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav m-auto py-4">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="whatson.html" class="nav-item nav-link">Whats On</a>
+                    <a href="reviews.html" class="nav-item nav-link">Reviews</a>
+                    <a href="blog.html" class="nav-item nav-link">Blog</a>
+                    <a href="Membership.html" class="nav-item nav-link active">Membership</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div style="display: flex;">
+                    <!--PHP session for when user is logged in to display "login" or "logout" depending on the session variable-->
+                    <!-- CSS style for active buttons inherited from style.css -->
+
+                    <?php if (isset($_SESSION['username'])) {
+                        echo "
+                    <form action ='private/logout.php' method='post'>
+                        <button class='btn btn-lg btn-primary mt-3 mt-md-4 px-4' name='logout'>Logout</button>
+                    </form>";
+                    } else {
+                        echo "<a style='margin: 0px 3px 5px 5px;' href='php/register.php' class='nav navbar-nav navbar-right'>Sign Up</a>
+                        <a style='margin: 0px 3px 5px 5px;' href='php/login.php' class='nav navbar-nav navbar-right'>Log in</a>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+
+<!-- Start of Membership features section -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="mb-4">Explore More With Our Membership</h2>
+            <p class="lead">Unlock the full potential of your theater experience with these exclusive features:</p>
+            <ul class="list-unstyled text-left mb-4">
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> VIP Access to Red Carpet Events</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Backstage Passes for Behind-the-Scenes Tours</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Interactive Workshops with Industry Professionals</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Members-Only Previews and Screenings</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Priority Booking for Sold-Out Shows</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Exclusive Discounts at Local Partner Restaurants</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Personalized Recommendations for Your Theater Preferences</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Access to Private Rehearsals and Cast Q&A Sessions</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Customizable Subscription Packages</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Quarterly Theater Magazine Subscription</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Complimentary Merchandise on Special Occasions</li>
+                <li class="mb-2"><i class="fa fa-star text-primary"></i> Annual Member Appreciation Gala</li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- End of Membership features section -->
+
+<!-- Join Us Section -->
+<section class="bg-secondary text-white py-5">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="font-weight-bold mb-4">MEMBERSHIPS</h2>
+            <p class="font-weight-bold mb-4">Sign up now to get the latest updates and special offers!</p>
+            <div class="row justify-content-center">
+                <div class="col-md-4 mb-5">
+                    <img src="img/join-us-free.png" alt="" class="img-fluid mb-3" style="max-width: 75%; height: auto;">
+                    <p class="font-weight-bold" style="font-size: 20px;">Bronze Membership</p>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <img src="img/join-us-free.png" alt="" class="img-fluid mb-3" style="max-width: 75%; height: auto; filter: brightness(0.5) sepia(1) hue-rotate(220deg);">
+                    <p class="font-weight-bold" style="font-size: 20px;">Silver Membership</p>
+                </div>
+                <div class="col-md-4 mb-5">
+                    <img src="img/join-us-free.png" alt="" class="img-fluid mb-3" style="max-width: 75%; height: auto; filter: brightness(0.9) sepia(1) hue-rotate(35deg);">
+                    <p class="font-weight-bold" style="font-size: 20px;">Gold Membership</p>
+                </div>
+            </div>
+            <a href="index.html" class="btn btn-primary">Learn More</a>
+        </div>
+    </div>
+</section>
+<!-- End of Join Us Section -->
+
+
+    
+
+        <!-- Footer Start -->
+<footer>
+    <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h1 class="mb-3 display-5 text-capitalize font-italic text-white"><span class="text-primary">Local</span>Theatre</h1>
+                <p class="m-0">Ipsum amet sed vero et lorem stet eos ut, labore sed sed stet sea est ipsum ut. Volup amet ea sanct ipsum, dolore vero lorem no duo eirmod. Eirmod amet ipsum no ipsum lorem clita ut. Ut sed sit lorem ea lorem sed, amet stet sit sea ea diam tempor kasd kasd. Diam nonumy etsit tempor ut sed diam sed et ea</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Popular Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <!-- Inherited class from style.css -->
+                    <div class="col-md-4 mb-5">
+                        <h5 class="text-primary mb-4">Get In Touch</h5>
+                        <!-- Footer menu div to split in headings for contact information -->
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>123 Street, New York, USA</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>+012 345 67890</p>
+                        <p><i class="fa fa-envelope mr-2"></i>info@example.com</p>
+                        <div class="d-flex justify-content-start mt-4">
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+         <div class="row pt-3">
+            <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                <p class="m-0 text-white">
+                    <!-- Creating "LocalTheatre" logo for the bottom of the website -->
+                    <!-- Adding copyright legislation -->
+                    &copy; <a class="text-white font-weight-bold" href="#">localTheatre</a>. 
+                    
+                    All Rights Reserved. Designed by Joshua Oakman
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <ul class="nav d-inline-flex">
+                    <li class="nav-item">
+                        <!-- Footer flex nav menu div to split up Privacy/Terms/FAQs/Help -->
+                        <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer End -->
+
+<!-- Back to Top -->
+<a href="#" class="btn btn-secondary border back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+<!-- JavaScript Libraries connected to page -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+<!-- Contact Javascript File -->
+<script src="mail/jqBootstrapValidation.min.js"></script>
+<script src="mail/contact.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
+</body>
+</html>

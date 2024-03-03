@@ -1,0 +1,530 @@
+<!-- Establishing connection to connection.php   -->
+<?php
+include_once('private/connection.php');
+
+session_start();
+//Starting Session
+
+?>
+
+<!-- Setting Doc type as HTML -->
+<!DOCTYPE html>
+<html lang="en">]
+
+<!-- Connecting to PhpMyadmin (http://localhost/phpmyadmin/index.php?route=/sql&server=1&db=localtheatre&table=login&pos=0) Database -->
+<?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "localtheatre";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT show_id, show_name, show_type FROM shows";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // output data of each row
+    while ($row = $result->fetch_assoc()) {
+        $shows_array[] = $row;
+    }
+} else {
+    echo "0 results";
+}
+$conn->close();
+
+
+?>
+<!-- Title for webpage as local theatre -->
+
+<head>
+    <meta charset="utf-8">
+    <title>localTheatre</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="localTheatre" name="keywords">
+    <meta content="localTheatre" name="description">
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Flaticon Font -->
+    <link href="lib/flaticon/font/flaticon.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+
+<body class="bg-white">
+    <!-- Topbar Start -->
+    <div class="container-fluid">
+        <div class="row bg-secondary py-2 px-lg-5">
+            <div class="col-lg-6 text-center text-lg-left">
+                <div class="d-inline-flex align-items-center">
+                    <p class="mr-2 mb-2 mb-lg-0 text-white">Opening Hours:</p>
+                    <span class="mb-2 mb-lg-0 text-white">8.00AM - 9.00PM</span>
+                </div>
+            </div>
+            <!-- Follow us links  -->
+            <!-- Div classes to inherit from style.css -->
+            <div class="col-lg-6 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <p class="m-0 mr-1 text-white">Follow Us:</p>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a class="text-white px-2" href="">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!-- Creating "LocalTheatre" logo for the top of the website -->
+        <div class="row py-3 px-lg-5">
+            <div class="col-lg-4">
+                <a href="" class="navbar-brand d-none d-lg-block">
+                    <h1 class="m-0 display-5 text-capitalize font-italic"><span class="text-primary">local</span>Theatre</h1>
+                </a>
+                <!-- A href to redirect back to index.php homepage -->
+                <!-- Flex box style CSS for contact information -->
+            </div>
+            <div class="col-lg-8 text-center text-lg-right">
+                <div class="d-inline-flex align-items-center">
+                    <div class="d-inline-flex flex-column text-center pr-3 border-right">
+                        <h6>Our Office</h6>
+                        <p class="m-0">23 South Street, Elgin</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center px-3 border-right">
+                        <h6>Email Us</h6>
+                        <p class="m-0">info@localtheatre.com</p>
+                    </div>
+                    <div class="d-inline-flex flex-column text-center pl-3">
+                        <h6>Call Us</h6>
+                        <p class="m-0">01343 657583</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+
+
+    <!-- Navbar Start -->
+    <!-- Containter added for navigation menu -->
+    <div class="container-fluid p-0 mb-5">
+        <nav class="navbar navbar-expand-lg bg-secondary navbar-dark py-0">
+            <a href="" class="navbar-brand d-block d-lg-none">
+                <h1 class="m-0 display-5 text-capitalize font-italic text-white"><span class="text-primary">local</span>Theatre</h1>
+            </a>
+            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav m-auto py-4">
+                    <a href="index.html" class="nav-item nav-link">Home</a>
+                    <a href="about.html" class="nav-item nav-link">About</a>
+                    <a href="whatson.html" class="nav-item nav-link active">Whats On</a>
+                    <a href="reviews.html" class="nav-item nav-link">Reviews</a>
+                    <a href="blog.html" class="nav-item nav-link">Blog</a>
+                    <a href="Membership.html" class="nav-item nav-link">Membership</a>
+                    <a href="contact.html" class="nav-item nav-link">Contact</a>
+                </div>
+                <div style="display: flex;">
+                    <!--PHP session for when user is logged in to display "login" or "logout" depending on the session variable-->
+                     <!-- CSS style for active buttons inherited from style.css -->
+
+                    <?php if (isset($_SESSION['username'])) {
+                        echo "
+                    <form action ='private/logout.php' method='post'>
+                        <button class='btn btn-lg btn-primary mt-3 mt-md-4 px-4' name='logout'>Logout</button>
+                    </form>";
+                    } else {
+                        echo "<a style='margin: 0px 3px 5px 5px;' href='php/register.php' class='nav navbar-nav navbar-right'>Sign Up</a>
+                        <a style='margin: 0px 3px 5px 5px;' href='php/login.php' class='nav navbar-nav navbar-right'>Log in</a>";
+                    }
+                    ?>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Services Start -->
+    <div class="container pt-5">
+        <div class="d-flex flex-column text-center mb-5">
+            <!-- Title of page inherited style from style.css -->
+            <!-- Headers of page inherited style from style.css -->
+            <h5 class="text-primary mb-3">Whats On</h5>
+            <h1 class="m-0">Award Winning Shows</h1>
+        </div>
+        <div class="row pb-3">
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/play1200.jpg" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[0]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [0] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    <div class="card-footer"><?php echo $shows_array[0]['show_type']; ?>
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/stage.jfif" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[1]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [1] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    <div class="card-footer"><?php echo $shows_array[1]['show_type']; ?>
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/images.jfif" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[2]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [2] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    <div class="card-footer"><?php echo $shows_array[2]['show_type']; ?>
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/ballet-1920.webp" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[3]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [3] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    <div class="card-footer"><?php echo $shows_array[3]['show_type']; ?>
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/149127.jpg" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[4]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [4] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    <div class="card-footer"><?php echo $shows_array[4]['show_type']; ?>
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card mb-2 p-3">
+                    <!-- Cards to display img and text of what shows are on currently -->
+                    <!-- Card inherits style from style.css -->
+                    <!-- Connected to "localtheatre" database -->
+                    <img class="card-img-top" src="img/LM-1200-030322.jpg" alt="">
+                    <div class="card-body bg-secondary d-flex align-items-center p-0">
+                        <h3 class="font-weight-normal d-flex flex-shrink-0 align-items-center justify-content-center bg-primary text-white m-0 mr-3" style="width: 45px; height: 45px;"></h3>
+                        <!-- Echos out show name depending on postional array of auto incremented ID -->
+                        <h6 class="card-title text-white text-truncate m-0"><?php echo $shows_array[5]['show_name']; ?></h6>
+                    </div>
+                    <!-- Connected to "localtheatre" database runs PHP query of [5] show array auto incremented ID  -->
+                    <!-- Echos out show type -->
+                    
+                    
+                    <!-- Debugging code for shows_array -->
+                    <!-- Testing JS to see out of echoing shows array -->
+                    <?php echo "<script>console.log('" . json_encode($shows_array) . "');</script>"; ?>
+                    <div class="card-footer"><?php echo $shows_array[5]['show_type']; ?>
+                    <!-- End Debug -->
+                        <br>
+                        Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet, diam sea est magna diam eos, rebum sit vero stet ipsum justo et.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Services End -->
+
+    <!-- Features Start -->
+    <div class="container-fluid py-5 py-lg-0 feature">
+        <!-- Inherits div style from feature-item style.css -->
+        <!-- Div 1 display Each Feature  -->
+        <div class="row py-5 py-lg-0">
+            <div class="col-lg-4 p-0">
+                <div class="feature-item d-flex align-items-center border-right px-5 mb-4 mb-lg-0">
+                    <div class="">
+                        <!-- Inherits div "" style from feature-item style.css -->
+                        <!-- A href to viewing shows table view.php -->
+                        <h5><a href="/php/view.php" style="text-align: center;">View all of our shows</a></h5>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu suscipit orci velit id libero
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 p-0">
+                <!-- Inherits div style from feature-item style.css -->
+                <!-- Div 2 display Each Feature  -->
+                <div class="feature-item d-flex align-items-center border-right px-5 mb-4 mb-lg-0">
+                    <i class="display-3 text-primary mr-4"></i>
+                    <div class="">
+                        <!-- Inherits div "" style from feature-item style.css -->
+                        <!-- A href to viewing shows table view.php -->
+                        <h5><a href="/php/view.php" style="text-align: center;">Edit Whats On</a></h5>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu suscipit orci velit id libero
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 p-0">
+                <!-- Inherits div style from feature-item style.css -->
+                <!-- Div 3 display Each Feature  -->
+                <div class="feature-item d-flex align-items-center px-5">
+                    <div class="">
+                        <!-- Inherits div "" style from feature-item style.css -->
+                        <!-- A href to adding a new shows table addTodB.php -->
+                        <h5><a href="/php/addTodB.php" style="text-align: center;">Add a new show</a></h5>
+                        <p class="m-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu suscipit orci velit id libero
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Features End -->
+
+
+    <!-- Reviews Start -->
+    <div class="container-fluid p-0">
+        <div class="container p-0 py-5">
+            <div class="d-flex flex-column text-center mb-5">
+                <!-- Heading of "What our customers say" -->
+                <!-- Style inherited from style.css -->
+                <h1 class="m-0">What Our Customers Say</h1>
+            </div>
+            <div class="owl-carousel testimonial-carousel">
+                <div class="testimonial-item px-3">
+                    <div class="testimonial-text position-relative border bg-light mb-4 py-3 px-4">
+                        Sed ea amet kasd elitr stet nonumy, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolores tempor voluptua ipsum sanctus clita
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <!-- Style inherited from style.css -->
+                        <img class="img-thumbnail bg-light rounded-circle" src="img/avatar.jpg" style="width: 80px; height: 80px; padding: 12px;" alt="Image">
+                        <div class="pl-4">
+                            <!-- Name and Data posted by users comment to site -->
+                            <h6 class="text-primary">Joshua Oakman</h6>
+                            <p class="m-0">2022</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item px-3">
+                    <!-- Style inherited from style.css -->
+                    <div class="testimonial-text position-relative border bg-light mb-4 py-3 px-4">
+                        Sed ea amet kasd elitr stet nonumy, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolores tempor voluptua ipsum sanctus clita
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <img class="img-thumbnail bg-light rounded-circle" src="img/testimonial-2.jpg" style="width: 80px; height: 80px; padding: 12px;" alt="Image">
+                        <div class="pl-4">
+                            <!-- Name and Data posted by users comment to site -->
+                            <h6 class="text-primary">John Smith</h6>
+                            <p class="m-0">2020</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item px-3">
+                    <!-- Style inherited from style.css -->
+                    <!-- Relative flex box controls horizontial moving comment section -->
+                    <div class="testimonial-text position-relative border bg-light mb-4 py-3 px-4">
+                        Sed ea amet kasd elitr stet nonumy, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolores tempor voluptua ipsum sanctus clita
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <!-- Style inherited from style.css -->
+                        <img class="img-thumbnail bg-light rounded-circle" src="img/testimonial-3.jpg" style="width: 80px; height: 80px; padding: 12px;" alt="Image">
+                        <div class="pl-4">
+                            <!-- Name and Data posted by users comment to site -->
+                            <h6 class="text-primary">John Doe</h6>
+                            <p class="m-0">2019</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-item px-3">
+                    <div class="testimonial-text position-relative border bg-light mb-4 py-3 px-4">
+                        Sed ea amet kasd elitr stet nonumy, stet rebum et ipsum est duo elitr eirmod clita lorem. Dolores tempor voluptua ipsum sanctus clita
+                    </div>
+                    <!-- Div style inherited from style.css -->
+                    <div class="d-flex align-items-center">
+                        <img class="img-thumbnail bg-light rounded-circle" src="img/testimonial-4.jpg" style="width: 80px; height: 80px; padding: 12px;" alt="Image">
+                        <div class="pl-4">
+                            <!-- Name and Data posted by users comment to site -->
+                            <h6 class="text-primary">David Branch</h6>
+                            <p class="m-0">2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Button set to the reviews.php page -->
+            <a href="reviews.html" class="btn btn-sm btn-primary mt-2">See More Reviews</a>
+        </div>
+    </div>
+    <!-- Testimonial End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-secondary text-white mt-5 py-5 px-sm-3 px-md-5">
+        <div class="row pt-5">
+            <div class="col-lg-4 col-md-12 mb-5">
+                <h1 class="mb-3 display-5 text-capitalize font-italic text-white"><span class="text-primary">local</span>Theatre</h1>
+                <p class="m-0">Ipsum amet sed vero et lorem stet eos ut, labore sed sed stet sea est ipsum ut. Volup amet ea sanct ipsum, dolore vero lorem no duo eirmod. Eirmod amet ipsum no ipsum lorem clita ut. Ut sed sit lorem ea lorem sed, amet stet sit sea ea diam tempor kasd kasd. Diam nonumy etsit tempor ut sed diam sed et ea</p>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="row">
+                    <div class="col-md-4 mb-5">
+                        <!-- Inherited class from style.css -->
+                        <h5 class="text-primary mb-4">Quick Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <!-- Inherited class from style.css -->
+                        <h5 class="text-primary mb-4">Popular Links</h5>
+                        <div class="d-flex flex-column justify-content-start">
+                            <!-- Footer menu div to split nav menu up Home/About/Whats On/Reviews/Blog/Contact -->
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>About Us</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Services</a>
+                            <a class="text-white mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Team</a>
+                            <a class="text-white" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <!-- Inherited class from style.css -->
+                        <h5 class="text-primary mb-4">Get In Touch</h5>
+                        <!-- Footer menu div to split in headings for contact information -->
+                        <p><i class="fa fa-map-marker-alt mr-2"></i>23 South Street, Elgin, UK</p>
+                        <p><i class="fa fa-phone-alt mr-2"></i>01343 657583</p>
+                        <p><i class="fa fa-envelope mr-2"></i>info@localtheatre.com</p>
+                        <div class="d-flex justify-content-start mt-4">
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-twitter"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-linkedin-in"></i></a>
+                            <a class="btn btn-outline-light rounded-circle text-center mr-2 px-0" style="width: 40px; height: 40px;" href="#"><i class="fab fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row pt-3">
+            <div class="col-md-6 text-center text-md-left mb-3 mb-md-0">
+                <p class="m-0 text-white">
+                    <!-- Creating "LocalTheatre" logo for the bottom of the website -->
+                    &copy; <a class="text-white font-weight-bold" href="#">localTheatre</a>. All Rights Reserved. Designed by Joshua Oakman
+                </p>
+            </div>
+            <div class="col-md-6 text-center text-md-right">
+                <ul class="nav d-inline-flex">
+                    <!-- Footer flex nav menu div to split up Privacy/Terms/FAQs/Help -->
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Privacy</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Terms</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white py-0" href="#">Help</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-secondary border back-to-top"><i class="fa fa-angle-double-up"></i></a>
+
+
+    <!-- JavaScript Libraries connected to page -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/counterup/counterup.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="mail/jqBootstrapValidation.min.js"></script>
+    <script src="mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
